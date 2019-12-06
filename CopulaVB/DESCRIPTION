@@ -1,13 +1,14 @@
 Package: CopulaVB
-Title: What the Package Does (One Line, Title Case)
+Title: Gaussian copula model with equicorrelation matrix
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Biraj",
            family = "Guha",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
+           email = "birajsguha@stat.tamu.edu",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Description: The package contains function to generate from Gaussian copula variational model, 
+as well as function (incomplete) to run Black Box variational algorithm if log joint of any model is specified.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
