@@ -11,7 +11,7 @@ trans_values = function(z, mu_mat, std_mat) {
   return(list(arg_mat = arg_mat, f_vec = f_vec, F_vec = F_vec, Y = Y))
 }
 
-## this defines the log variational density
+## this defines the log variational density as well as the derivatives
 ## INPUT
 # z = p-dimensional argument, rho = equicorrelation coefficient
 # mu_mat, std_mat = matrix of the Gaussian means/standard deviations of size p x K
@@ -20,6 +20,9 @@ trans_values = function(z, mu_mat, std_mat) {
 log_var_density = function(z, mu_mat, std_mat, rho) {
   if(sum(dim(mu_mat) == dim(std_mat)) != 2) {
     stop("matrices mu_mat and std_mat should have the same dimensions")
+  }
+  if(length(z) != nrow(mu_mat)) {
+    stop("Argument z should have same length as row size of mu_mat")
   }
   p = nrow(mu_mat)
   K = ncol(mu_mat)
