@@ -64,7 +64,7 @@ rho_mat = function(rho, p) {
 ## INPUT
 # n_sample = no. of samples to be drawn
 # mu_mat, std_mat = matrix of the Gaussian means/standard deviations of size p x K
-# p = dimension of parameter space, K = number of mixture components
+# p = dimension of parameter space, K = number of mixture components, rho = equicorrelation coefficient
 ## OUTPUT
 # n_samples from the variational density
 generate_var_density = function(n_sample, mu_mat, std_mat, rho, seed = 1234) {
