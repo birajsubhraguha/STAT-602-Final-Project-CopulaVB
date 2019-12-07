@@ -21,7 +21,7 @@ require(stats)
 #' @return samples from the Gaussian copula model with equicorrelation matrix
 #' @export
 #'
-#' @examples generate_var_density(n_sample = 10000, mu_mat = matrix(1:8, nrow = 2, byrow = TRUE),
+#' @examples generate_var_density(n_sample = 100, mu_mat = matrix(1:8, nrow = 2, byrow = TRUE),
 #' std_mat = matrix(1, ncol = 4, nrow = 2), rho = .5, seed = 123)
 generate_var_density = function(n_sample, mu_mat, std_mat, rho, seed = 1234) {
   if(sum(dim(mu_mat) == dim(std_mat)) != 2) {

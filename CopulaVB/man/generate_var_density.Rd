@@ -24,6 +24,6 @@ samples from the Gaussian copula model with equicorrelation matrix
 \code{generate_var_density} Generates samples from Gaussian Copula model with marginals specified by finite Gaussian mixtures and having equicorrelation coefficient rho
 }
 \examples{
-generate_var_density(n_sample = 10000, mu_mat = matrix(1:8, nrow = 2, byrow = TRUE),
+generate_var_density(n_sample = 100, mu_mat = matrix(1:8, nrow = 2, byrow = TRUE),
 std_mat = matrix(1, ncol = 4, nrow = 2), rho = .5, seed = 123)
 }
