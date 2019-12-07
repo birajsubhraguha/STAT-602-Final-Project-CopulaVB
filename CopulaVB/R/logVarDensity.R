@@ -1,5 +1,3 @@
-
-
 ## this defines the log variational density as well as the derivatives
 ## INPUT
 # z = p-dimensional argument, rho = equicorrelation coefficient
@@ -8,6 +6,8 @@
 # log density at z, derivatives of log density wrt all the parameters at z
 
 #' log density and derivatives
+#'
+#' \code{log_var_density} Calculates the log value of the Gaussian Copula model density at the provided input, using mixture Gaussian marginals and equicorrelation coefficient rho. Also outputs derivatives of the log density wrt to all the mean and sd parameters, as well as rho
 #'
 #' @param z : input
 #' @param mu_mat : matrix of Gaussian means, components along rows
@@ -58,7 +58,7 @@ log_var_density = function(z, mu_mat, std_mat, rho) {
   # returning log of density
   log_density = (-0.5 * (log_det + quad_term)) + sum(log_marginals)
 
-  const_vec = (rho / (rho - 1)) * Y_term * (1/(stats::dnorm(Y))) / K
+  const_vec = ((rho / (rho - 1)) * Y_term) * (1/(stats::dnorm(Y))) / K
   const_mat = matrix(const_vec, ncol = K, nrow = p)
   del_1 = const_mat * stats::dnorm(arg_mat) / std_mat
   del_2 = (arg_mat * stats::dnorm(arg_mat) / (std_mat * f_mat))/K
