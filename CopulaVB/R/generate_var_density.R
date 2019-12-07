@@ -13,16 +13,28 @@ require(stats)
 #' \code{generate_var_density} Generates samples from Gaussian Copula model with marginals specified by finite Gaussian mixtures and having equicorrelation coefficient rho
 #'
 #' @param n_sample : number of samples
-#' @param mu_mat : matrix of Gaussian means, components along rows and marginals along columns
-#' @param std_mat : matrix of Gaussian sds, components along rows and marginals along columns
-#' @param rho : equicorrealtion coefficient, lying betwwen -1 and 1
+#' @param mu_mat : p x K - dimensional matrix of Gaussian means, components along rows and marginals along columns
+#' @param std_mat : p x K - dimensional matrix of Gaussian sds, components along rows and marginals along columns
+#' @param rho : scalar, equicorrealtion coefficient, lying betwwen -1 and 1
 #' @param seed : seed
 #'
-#' @return samples from the Gaussian copula model with equicorrelation matrix
+#' @return n_sample x p - dimensional matrix, rows are samples from the variational density
+#'
 #' @export
 #'
-#' @examples generate_var_density(n_sample = 100, mu_mat = matrix(1:8, nrow = 2, byrow = TRUE),
+#' @examples
+#' ## generating 2D data from the variational density
+#' out = generate_var_density(n_sample = 10000, mu_mat = matrix(1:8, nrow = 2, byrow = TRUE),
 #' std_mat = matrix(1, ncol = 4, nrow = 2), rho = .5, seed = 123)
+#' out = as.data.frame(out)
+#' colnames(out) = c("x", "y")
+#'
+#' ## 2D count plot of above data
+#' require(ggplot2)
+#' plot = ggplot2::ggplot(out, aes(x=x, y=y) ) + geom_bin2d(bins = 70) +
+#' scale_fill_continuous(type = "viridis") + theme_bw()
+#' print(plot + ggtitle("2D count plot"))
+#'
 generate_var_density = function(n_sample, mu_mat, std_mat, rho, seed = 1234) {
   if(sum(dim(mu_mat) == dim(std_mat)) != 2) {
     stop("matrices mu_mat and std_mat should have the same dimensions")

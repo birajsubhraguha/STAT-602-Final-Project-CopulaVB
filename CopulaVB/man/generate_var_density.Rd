@@ -9,21 +9,31 @@ generate_var_density(n_sample, mu_mat, std_mat, rho, seed = 1234)
 \arguments{
 \item{n_sample}{: number of samples}
 
-\item{mu_mat}{: matrix of Gaussian means, components along rows and marginals along columns}
+\item{mu_mat}{: p x K - dimensional matrix of Gaussian means, components along rows and marginals along columns}
 
-\item{std_mat}{: matrix of Gaussian sds, components along rows and marginals along columns}
+\item{std_mat}{: p x K - dimensional matrix of Gaussian sds, components along rows and marginals along columns}
 
-\item{rho}{: equicorrealtion coefficient, lying betwwen -1 and 1}
+\item{rho}{: scalar, equicorrealtion coefficient, lying betwwen -1 and 1}
 
 \item{seed}{: seed}
 }
 \value{
-samples from the Gaussian copula model with equicorrelation matrix
+n_sample x p - dimensional matrix, rows are samples from the variational density
 }
 \description{
 \code{generate_var_density} Generates samples from Gaussian Copula model with marginals specified by finite Gaussian mixtures and having equicorrelation coefficient rho
 }
 \examples{
-generate_var_density(n_sample = 100, mu_mat = matrix(1:8, nrow = 2, byrow = TRUE),
+## generating 2D data from the variational density
+out = generate_var_density(n_sample = 10000, mu_mat = matrix(1:8, nrow = 2, byrow = TRUE),
 std_mat = matrix(1, ncol = 4, nrow = 2), rho = .5, seed = 123)
+out = as.data.frame(out)
+colnames(out) = c("x", "y")
+
+## 2D count plot of above data
+require(ggplot2)
+plot = ggplot2::ggplot(out, aes(x=x, y=y) ) + geom_bin2d(bins = 70) +
+scale_fill_continuous(type = "viridis") + theme_bw()
+print(plot + ggtitle("2D count plot"))
+
 }
