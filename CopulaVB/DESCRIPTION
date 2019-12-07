@@ -8,7 +8,7 @@ Authors@R:
            email = "birajsguha@stat.tamu.edu",
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: The package contains function to generate from Gaussian copula variational model. It also has function to compute the variational derivatives wrt to the means, sds and the correlation coefficient.
-Imports: MASS, stats
+Imports: MASS, stats, ggplot2
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
