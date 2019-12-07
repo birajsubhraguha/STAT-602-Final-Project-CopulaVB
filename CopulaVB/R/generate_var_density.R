@@ -13,15 +13,16 @@ require(stats)
 #' \code{generate_var_density} Generates samples from Gaussian Copula model with marginals specified by finite Gaussian mixtures and having equicorrelation coefficient rho
 #'
 #' @param n_sample : number of samples
-#' @param mu_mat : matrix of Gaussian means, components along rows
-#' @param std_mat : matrix of Gaussian sds, components along rows
+#' @param mu_mat : matrix of Gaussian means, components along rows and marginals along columns
+#' @param std_mat : matrix of Gaussian sds, components along rows and marginals along columns
 #' @param rho : equicorrealtion coefficient, lying betwwen -1 and 1
 #' @param seed : seed
 #'
 #' @return samples from the Gaussian copula model with equicorrelation matrix
 #' @export
 #'
-#' @examples
+#' @examples generate_var_density(n_sample = 10000, mu_mat = matrix(1:8, nrow = 2, byrow = TRUE),
+#' std_mat = matrix(1, ncol = 4, nrow = 2), rho = .5, seed = 123)
 generate_var_density = function(n_sample, mu_mat, std_mat, rho, seed = 1234) {
   if(sum(dim(mu_mat) == dim(std_mat)) != 2) {
     stop("matrices mu_mat and std_mat should have the same dimensions")

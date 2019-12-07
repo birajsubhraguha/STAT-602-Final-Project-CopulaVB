@@ -10,14 +10,15 @@
 #' \code{log_var_density} Calculates the log value of the Gaussian Copula model density at the provided input, using mixture Gaussian marginals and equicorrelation coefficient rho. Also outputs derivatives of the log density wrt to all the mean and sd parameters, as well as rho
 #'
 #' @param z : input
-#' @param mu_mat : matrix of Gaussian means, components along rows
-#' @param std_mat : matrix of Gaussian sds, components along rows
+#' @param mu_mat : matrix of Gaussian means, components along rows and marginals along columns
+#' @param std_mat : matrix of Gaussian sds, components along rows and marginals along columns
 #' @param rho : equicorrealtion coefficient, lying betwwen -1 and 1
 #'
 #' @return : A list containing the log density and derivatives wrt mu, std and rho
 #' @export
 #'
-#' @examples
+#' @examples log_var_density(z = c(0, 0), mu_mat = matrix(0, ncol = 4, nrow = 2),
+#' std_mat = matrix(rexp(8), ncol = 4, nrow = 2), rho = 0)
 log_var_density = function(z, mu_mat, std_mat, rho) {
   if(sum(dim(mu_mat) == dim(std_mat)) != 2) {
     stop("matrices mu_mat and std_mat should have the same dimensions")
