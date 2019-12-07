@@ -9,9 +9,9 @@ log_var_density(z, mu_mat, std_mat, rho)
 \arguments{
 \item{z}{: input}
 
-\item{mu_mat}{: matrix of Gaussian means, components along rows}
+\item{mu_mat}{: matrix of Gaussian means, components along rows and marginals along columns}
 
-\item{std_mat}{: matrix of Gaussian sds, components along rows}
+\item{std_mat}{: matrix of Gaussian sds, components along rows and marginals along columns}
 
 \item{rho}{: equicorrealtion coefficient, lying betwwen -1 and 1}
 }
@@ -20,4 +20,8 @@ log_var_density(z, mu_mat, std_mat, rho)
 }
 \description{
 \code{log_var_density} Calculates the log value of the Gaussian Copula model density at the provided input, using mixture Gaussian marginals and equicorrelation coefficient rho. Also outputs derivatives of the log density wrt to all the mean and sd parameters, as well as rho
+}
+\examples{
+log_var_density(z = c(0, 0), mu_mat = matrix(0, ncol = 4, nrow = 2),
+std_mat = matrix(rexp(8), ncol = 4, nrow = 2), rho = 0)
 }

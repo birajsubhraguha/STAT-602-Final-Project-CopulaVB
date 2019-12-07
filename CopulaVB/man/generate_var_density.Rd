@@ -9,9 +9,9 @@ generate_var_density(n_sample, mu_mat, std_mat, rho, seed = 1234)
 \arguments{
 \item{n_sample}{: number of samples}
 
-\item{mu_mat}{: matrix of Gaussian means, components along rows}
+\item{mu_mat}{: matrix of Gaussian means, components along rows and marginals along columns}
 
-\item{std_mat}{: matrix of Gaussian sds, components along rows}
+\item{std_mat}{: matrix of Gaussian sds, components along rows and marginals along columns}
 
 \item{rho}{: equicorrealtion coefficient, lying betwwen -1 and 1}
 
@@ -22,4 +22,8 @@ samples from the Gaussian copula model with equicorrelation matrix
 }
 \description{
 \code{generate_var_density} Generates samples from Gaussian Copula model with marginals specified by finite Gaussian mixtures and having equicorrelation coefficient rho
+}
+\examples{
+generate_var_density(n_sample = 10000, mu_mat = matrix(1:8, nrow = 2, byrow = TRUE),
+std_mat = matrix(1, ncol = 4, nrow = 2), rho = .5, seed = 123)
 }
