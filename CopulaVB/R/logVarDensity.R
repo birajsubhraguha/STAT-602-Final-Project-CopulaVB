@@ -56,13 +56,14 @@ log_var_density = function(z, mu_mat, std_mat, rho) {
   log_det = ((p - 1) * log(1 - rho)) + log(1 + ((p - 1) * rho))
 
   log_marginals = log(f_vec)
-  Y_term = (crossprod(Y) - ((sum(Y)^2)/(1 + ((p - 1) * rho))))
+  Y_term = (as.numeric(crossprod(Y)) - ((sum(Y)^2)/(1 + ((p - 1) * rho))))
   quad_term = (rho/(1 - rho)) * Y_term
 
   # returning log of density
   log_density = (-0.5 * (log_det + quad_term)) + sum(log_marginals)
 
-  const_vec = ((rho / (rho - 1)) * Y_term) * (1/(stats::dnorm(Y))) / K
+  const_vec = as.vector(1/(stats::dnorm(Y)))
+  const_vec = const_vec * ((rho / (rho - 1)) * Y_term) / K
   const_mat = matrix(const_vec, ncol = K, nrow = p)
   del_1 = const_mat * stats::dnorm(arg_mat) / std_mat
   del_2 = (arg_mat * stats::dnorm(arg_mat) / (std_mat * f_mat))/K
