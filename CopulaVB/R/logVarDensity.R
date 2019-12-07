@@ -25,6 +25,9 @@ log_var_density = function(z, mu_mat, std_mat, rho) {
   if(length(z) != nrow(mu_mat)) {
     stop("Argument z should have same length as row size of mu_mat")
   }
+  if((rho > 1) | (rho < -1)) {
+    stop("rho must lie between -1 and 1")
+  }
   p = nrow(mu_mat)
   K = ncol(mu_mat)
 
