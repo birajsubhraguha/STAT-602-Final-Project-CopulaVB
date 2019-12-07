@@ -1,15 +1,4 @@
-## this defines some useful quantities to be used later
-trans_values = function(z, mu_mat, std_mat) {
-  p = nrow(mu_mat)
-  K = ncol(mu_mat)
-  z_mat = matrix(z, nrow = p, ncol = K)
-  arg_mat = (z_mat - mu_mat)/std_mat
 
-  f_vec = (rowSums(dnorm(arg_mat)))/K
-  F_vec = (rowSums(pnorm(arg_mat)))/K
-  Y = qnorm(F_vec)
-  return(list(arg_mat = arg_mat, f_vec = f_vec, F_vec = F_vec, Y = Y))
-}
 
 ## this defines the log variational density as well as the derivatives
 ## INPUT
@@ -17,6 +6,18 @@ trans_values = function(z, mu_mat, std_mat) {
 # mu_mat, std_mat = matrix of the Gaussian means/standard deviations of size p x K
 ## OUTPUT
 # log density at z, derivatives of log density wrt all the parameters at z
+
+#' log density and derivatives
+#'
+#' @param z : input
+#' @param mu_mat : matrix of Gaussian means, components along rows
+#' @param std_mat : matrix of Gaussian sds, components along rows
+#' @param rho : equicorrealtion coefficient, lying betwwen -1 and 1
+#'
+#' @return : A list containing the log density and derivatives wrt mu, std and rho
+#' @export
+#'
+#' @examples
 log_var_density = function(z, mu_mat, std_mat, rho) {
   if(sum(dim(mu_mat) == dim(std_mat)) != 2) {
     stop("matrices mu_mat and std_mat should have the same dimensions")
@@ -26,6 +27,20 @@ log_var_density = function(z, mu_mat, std_mat, rho) {
   }
   p = nrow(mu_mat)
   K = ncol(mu_mat)
+
+  ## this defines some useful quantities to be used later
+  trans_values = function(z, mu_mat, std_mat) {
+    p = nrow(mu_mat)
+    K = ncol(mu_mat)
+    z_mat = matrix(z, nrow = p, ncol = K)
+    arg_mat = (z_mat - mu_mat)/std_mat
+
+    f_vec = (rowSums(stats::dnorm(arg_mat)))/K
+    F_vec = (rowSums(stats::pnorm(arg_mat)))/K
+    Y = stats::qnorm(F_vec)
+    return(list(arg_mat = arg_mat, f_vec = f_vec, F_vec = F_vec, Y = Y))
+  }
+
   val = trans_values(z, mu_mat, std_mat)
   arg_mat = val$arg_mat
   f_vec = val$f_vec
@@ -43,10 +58,10 @@ log_var_density = function(z, mu_mat, std_mat, rho) {
   # returning log of density
   log_density = (-0.5 * (log_det + quad_term)) + sum(log_marginals)
 
-  const_vec = (rho / (rho - 1)) * Y_term * (1/(dnorm(Y))) / K
+  const_vec = (rho / (rho - 1)) * Y_term * (1/(stats::dnorm(Y))) / K
   const_mat = matrix(const_vec, ncol = K, nrow = p)
-  del_1 = const_mat * dnorm(arg_mat) / std_mat
-  del_2 = (arg_mat * dnorm(arg_mat) / (std_mat * f_mat))/K
+  del_1 = const_mat * stats::dnorm(arg_mat) / std_mat
+  del_2 = (arg_mat * stats::dnorm(arg_mat) / (std_mat * f_mat))/K
 
   # derivative wrt mu
   del_mu_mat = del_1 + del_2
